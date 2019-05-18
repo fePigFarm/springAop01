@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:aop="http://www.springframework.org/schema/aop"
+     xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+
+<!-- 配置对象 IOC  beans是单数不是复数 -->
+    <!--<beans class="faith.spring.aop.Book" id="book"></beans>-->
+    <!--<beans class="faith.spring.aop.MyBook" id="myBook"></beans>-->
+    <bean id="book" class="faith.spring.aop.Book"></bean>
+    <bean id="myBook" class="faith.spring.aop.MyBook"></bean>
+
+    <!-- 配置AOP操作 -->
+    <aop:config>
+        <!-- 配置切入点-->
+        <aop:pointcut id="pointcut" expression="execution(* faith.spring.aop.Book.add())})" />
+        <aop:pointcut id="pointcutAfter" expression="execution(* faith.spring.aop.Book.add(String, int)) and args(name, num)})" />
+
+        <!-- 配置切面 应用增强方法 -->
+        <aop:aspect ref="myBook">
+            <!--配置增强类型-->
+
+            <!--前置增强-->
+            <aop:before method="before" pointcut-ref="pointcut"/>
+
+            <!--后置增强-->
+            <aop:after-returning method="after" pointcut-ref="pointcutAfter" arg-names="name, num"/>
+
+            <!--环绕增强-->
+            <aop:around method="arround" pointcut-ref="pointcut"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>
