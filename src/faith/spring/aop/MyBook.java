@@ -26,7 +26,7 @@ public class MyBook {
         //方法之前执行的代码
         System.out.println("环绕增强 方法之前执行........");
 
-        //执行被增强的方法
+        //执行被增强的方法(放行)
         proceedingJoinPoint.proceed();
 
         //方法之后执行的代码
